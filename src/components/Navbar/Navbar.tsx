@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 
-import { Group, Navbar as Container, Text } from '@mantine/core'
-
-import { HomeIcon } from '~/assets/lottie'
+import { Navbar as Container, Text } from '@mantine/core'
 
 export function Navbar() {
 	const [opened, setOpened] = useState<boolean>(false)
@@ -15,10 +13,9 @@ export function Navbar() {
 			hidden={!opened}
 			style={{ border: 0 }}
 		>
-			<Group spacing={'xs'} position={'left'}>
-				<HomeIcon />
+			<Container.Section grow>
 				<Text>Home</Text>
-			</Group>
+			</Container.Section>
 		</Container>
 	)
 }
