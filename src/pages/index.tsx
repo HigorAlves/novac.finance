@@ -11,17 +11,20 @@ import {
 	TextInput,
 	Title
 } from '@mantine/core'
+import { useRouter } from 'next/router'
 
 import { useUser } from '~/context'
 import { AUTH, GoogleAuth } from '~/services'
 
 export default function Home() {
 	const { dispatch } = useUser()
+	const router = useRouter()
 
 	useEffect(() => {
 		onAuthStateChanged(AUTH, user => {
 			if (user) {
 				dispatch(user)
+				router.push('/dashboard')
 			}
 		})
 	}, [dispatch])
