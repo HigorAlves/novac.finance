@@ -2,8 +2,8 @@ import React from 'react'
 
 import { LAYOUT } from '~/config/constants'
 
-export default function Dashboard() {
+export default function Index() {
 	return <div>SOMETHING INSIDE HERE</div>
 }
 
-Dashboard.layout = LAYOUT.DASHBOARD
+Index.layout = LAYOUT.DASHBOARD

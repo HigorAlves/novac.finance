@@ -11,6 +11,7 @@ import {
 	useMantineTheme
 } from '@mantine/core'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import {
 	HiFingerPrint,
 	HiOutlineBell,
@@ -19,11 +20,14 @@ import {
 	HiOutlineUser
 } from 'react-icons/hi'
 
+import { ROUTES } from '~/config/constants'
 import { useUser } from '~/context'
 import { GoogleAuth } from '~/services'
 
 export function Header() {
 	const { state } = useUser()
+	// TODO: use link component instead of router
+	const router = useRouter()
 	const [opened, setOpened] = useState<boolean>(false)
 	const theme = useMantineTheme()
 	const DARK_LOGO = '/assets/images/logo-dark.png'
@@ -62,6 +66,7 @@ export function Header() {
 							Profile
 						</Menu.Item>
 						<Menu.Item
+							onClick={() => router.push(ROUTES.BANK_INFO)}
 							icon={<HiOutlineLibrary color={theme.colors.red[6]} size={18} />}
 						>
 							Banking Information
