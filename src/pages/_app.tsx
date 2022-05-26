@@ -1,11 +1,24 @@
 import { MantineProvider } from '@mantine/core'
+import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
 import { UserProvider } from '~/context/AuthContext'
+import { Layout, LayoutTypes } from '~/layout'
 
-export default function App(props: AppProps) {
+type NextPageWithLayout = NextPage & {
+	layout?: LayoutTypes
+	key?: string
+}
+
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout
+}
+
+export default function App(props: AppPropsWithLayout) {
 	const { Component, pageProps } = props
+
+	const layoutType = Component.layout || 'normal'
 
 	return (
 		<>
@@ -23,7 +36,9 @@ export default function App(props: AppProps) {
 				theme={{ colorScheme: 'light' }}
 			>
 				<UserProvider>
-					<Component {...pageProps} />
+					<Layout type={layoutType}>
+						<Component {...pageProps} />
+					</Layout>
 				</UserProvider>
 			</MantineProvider>
 		</>

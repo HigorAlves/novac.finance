@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { AppShell } from '~/components'
-
 export default function Dashboard() {
-	return <AppShell />
+	return <div>olaasas</div>
 }
+
+Dashboard.layout = 'dashboard'

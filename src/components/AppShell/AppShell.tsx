@@ -4,7 +4,11 @@ import { AppShell as Container } from '@mantine/core'
 
 import { Header, Navbar } from '~/components'
 
-export function AppShell() {
+interface AppShellProps {
+	children: React.ReactNode
+}
+
+export function AppShell({ children }: AppShellProps) {
 	return (
 		<Container
 			fixed
@@ -22,7 +26,7 @@ export function AppShell() {
 				}
 			})}
 		>
-			{/* Your application here */}
+			{children}
 		</Container>
 	)
 }

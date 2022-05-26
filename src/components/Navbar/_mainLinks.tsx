@@ -40,11 +40,6 @@ const data = [
 		icon: <HiOutlineLogout size={24} color={'red'} />,
 		color: 'blue',
 		label: 'Home'
-	},
-	{
-		icon: <HiOutlineLogout size={24} color={'red'} />,
-		color: 'teal',
-		label: 'Invoices'
 	}
 ]
 
