@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 
 import { DashboardLayout } from '~/layout/dashboard.layout'
 
-export type LayoutTypes = 'dashboard' | 'normal'
+export type LayoutTypes = 'DASHBOARD' | 'BASE'
 
 interface Props {
 	children: ReactNode
@@ -12,8 +12,8 @@ interface Props {
 export function Layout({ children, type }: Props) {
 	function layoutChoice(type: LayoutTypes) {
 		const layoutList = {
-			dashboard: <DashboardLayout>{children}</DashboardLayout>,
-			normal: <div>{children}</div>
+			DASHBOARD: <DashboardLayout>{children}</DashboardLayout>,
+			BASE: <div>{children}</div>
 		}
 
 		return layoutList[type] || <div>{children}</div>

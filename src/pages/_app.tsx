@@ -3,6 +3,7 @@ import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import Head from 'next/head'
 
+import { LAYOUT } from '~/config/constants'
 import { UserProvider } from '~/context/AuthContext'
 import { Layout, LayoutTypes } from '~/layout'
 
@@ -18,7 +19,7 @@ type AppPropsWithLayout = AppProps & {
 export default function App(props: AppPropsWithLayout) {
 	const { Component, pageProps } = props
 
-	const layoutType = Component.layout || 'normal'
+	const LAYOUT_KEY = Component.layout || (LAYOUT.BASE as LayoutTypes)
 
 	return (
 		<>
@@ -36,7 +37,7 @@ export default function App(props: AppPropsWithLayout) {
 				theme={{ colorScheme: 'light' }}
 			>
 				<UserProvider>
-					<Layout type={layoutType}>
+					<Layout type={LAYOUT_KEY}>
 						<Component {...pageProps} />
 					</Layout>
 				</UserProvider>

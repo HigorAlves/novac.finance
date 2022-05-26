@@ -1,7 +1,9 @@
 import React from 'react'
 
+import { LAYOUT } from '~/config/constants'
+
 export default function Dashboard() {
-	return <div>olaasas</div>
+	return <div>SOMETHING INSIDE HERE</div>
 }
 
-Dashboard.layout = 'dashboard'
+Dashboard.layout = LAYOUT.DASHBOARD
