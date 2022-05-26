@@ -13,7 +13,13 @@ export default function Bank() {
 			<Space h={'lg'} />
 			<Grid>
 				<Grid.Col span={6} md={6} sm={12}>
-					<BankCard bankName={'XP Inc,'} />
+					<BankCard name={'XP Inc.'} />
+				</Grid.Col>
+				<Grid.Col span={6} md={6} sm={12}>
+					<BankCard name={'Travelex'} />
+				</Grid.Col>
+				<Grid.Col span={6} md={6} sm={12}>
+					<BankCard name={'Husky'} />
 				</Grid.Col>
 			</Grid>
 		</section>

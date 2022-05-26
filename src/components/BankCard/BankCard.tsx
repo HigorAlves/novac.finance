@@ -3,13 +3,19 @@ import React from 'react'
 import { Button, Divider, Group, Paper, Title } from '@mantine/core'
 
 interface BankCardProps {
-	bankName: string
+	name: string
+	address: string
+	holder: string
+	agency: string
+	account: string
+	iban: string
+	swiftCode: string
 }
 
 export function BankCard(props: BankCardProps) {
 	return (
 		<Paper p={'lg'} shadow={'xs'}>
-			<Title order={3}>{props.bankName}</Title>
+			<Title order={3}>{props.name}</Title>
 			<Divider mt={'xs'} />
 
 			<Group mt={'xl'} position={'right'}>
