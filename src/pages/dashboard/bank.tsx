@@ -8,7 +8,7 @@ import { LAYOUT } from '~/config/constants'
 export default function Bank() {
 	return (
 		<section>
-			<Title order={2}>Bank Account Information</Title>
+			<Title order={2}>Bank Accounts</Title>
 
 			<Space h={'lg'} />
 			<Grid>
