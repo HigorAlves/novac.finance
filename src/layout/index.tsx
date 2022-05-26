@@ -13,10 +13,10 @@ export function Layout({ children, type }: Props) {
 	function layoutChoice(type: LayoutTypes) {
 		const layoutList = {
 			DASHBOARD: <DashboardLayout>{children}</DashboardLayout>,
-			BASE: <div>{children}</div>
+			BASE: children
 		}
 
-		return layoutList[type] || <div>{children}</div>
+		return layoutList[type] || children
 	}
 
 	return layoutChoice(type)
