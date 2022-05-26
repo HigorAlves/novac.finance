@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 
-import { Navbar as Container, Text } from '@mantine/core'
+import { Navbar as Container } from '@mantine/core'
+
+import { MainLinks } from '~/components/Navbar/_mainLinks'
 
 export function Navbar() {
 	const [opened, setOpened] = useState<boolean>(false)
+
 	return (
 		<Container
 			hiddenBreakpoint={'sm'}
@@ -13,8 +16,8 @@ export function Navbar() {
 			hidden={!opened}
 			style={{ border: 0 }}
 		>
-			<Container.Section grow>
-				<Text>Home</Text>
+			<Container.Section grow mt='md'>
+				<MainLinks />
 			</Container.Section>
 		</Container>
 	)
