@@ -38,9 +38,9 @@ export function LoginForm() {
 				Or continue with email address
 			</Text>
 			<Space h={'md'} />
-			<TextInput placeholder={'Your email'} />
+			<TextInput placeholder={'Your email'} disabled />
 			<Space h={'sm'} />
-			<Button color={'red'} fullWidth>
+			<Button color={'red'} fullWidth disabled>
 				Continue
 			</Button>
 		</Container>
