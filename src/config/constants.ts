@@ -9,5 +9,6 @@ export const LAYOUT: Layout = {
 }
 
 export const ROUTES: RouteType = {
+	HOME: '/dashboard',
 	BANK_INFO: '/dashboard/bank'
 }
