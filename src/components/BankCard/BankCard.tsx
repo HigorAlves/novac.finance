@@ -10,26 +10,10 @@ import {
 	useMantineTheme
 } from '@mantine/core'
 
-interface BankCardProps {
-	name: string
-	address: string
-	holder: string
-	agency: string
-	account: string
-	iban: string
-	swiftCode: string
-	value: number
-	website: string
-}
+import { currencyFormat } from '~/helpers/currencyFormat'
+import { BankProps } from '~/types/bankTypes'
 
-interface KeyPerson {
-	name: string
-	phone: number
-	email: string
-	country: string
-}
-
-export function BankCard(props: BankCardProps) {
+export function BankCard(props: BankProps) {
 	const theme = useMantineTheme()
 
 	return (
@@ -41,7 +25,7 @@ export function BankCard(props: BankCardProps) {
 				<Group position={'left'}>
 					<Text size={'xs'}>On Account</Text>
 					<Text size={'sm'} weight={'bold'}>
-						$ 30.123,2
+						{currencyFormat(props.value)}
 					</Text>
 				</Group>
 

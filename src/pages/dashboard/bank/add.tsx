@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import {
 	Button,
@@ -13,9 +13,13 @@ import {
 import { useForm } from '@mantine/form'
 
 import { LAYOUT } from '~/config/constants'
+import { useUser } from '~/context'
+import { registerBankAccount } from '~/services/bank/bank'
 import { BankProps } from '~/types/bankTypes'
 
 export default function AddNewBankPage() {
+	const { state } = useUser()
+	const [loading, setLoading] = useState<boolean>(false)
 	const form = useForm({
 		initialValues: {
 			name: '',
@@ -39,6 +43,7 @@ export default function AddNewBankPage() {
 	})
 
 	function handleSubmit(values: typeof form.values) {
+		setLoading(true)
 		const data: BankProps = {
 			name: values.name,
 			website: values.website,
@@ -62,8 +67,11 @@ export default function AddNewBankPage() {
 				country: values.ownerCountry
 			}
 		}
+		const uid = state?.uid as string
 
-		console.log(data)
+		registerBankAccount(data, uid)
+			.then(() => setLoading(false))
+			.catch(() => setLoading(false))
 	}
 
 	return (
@@ -215,7 +223,7 @@ export default function AddNewBankPage() {
 					</Grid>
 				</Paper>
 
-				<Button color={'dark'} type={'submit'} fullWidth>
+				<Button color={'dark'} type={'submit'} fullWidth loading={loading}>
 					SAVE
 				</Button>
 			</form>

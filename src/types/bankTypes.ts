@@ -14,6 +14,7 @@ export interface BankKeyPersonProps {
 }
 
 export interface BankProps {
+	id?: string
 	name: string
 	website: string
 	value: number
