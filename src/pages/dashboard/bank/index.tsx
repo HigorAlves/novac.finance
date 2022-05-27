@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { Grid, Space, Title } from '@mantine/core'
+import { Button, Grid, Group, Space, Title } from '@mantine/core'
 
 import { BankCard } from '~/components'
 import { LAYOUT } from '~/config/constants'
 
-export default function Bank() {
+export default function Index() {
 	return (
 		<section>
 			<Title order={2}>Bank Accounts</Title>
@@ -22,8 +22,14 @@ export default function Bank() {
 					<BankCard name={'Husky'} />
 				</Grid.Col>
 			</Grid>
+
+			<Group grow mt={'xl'} position={'right'}>
+				<Button color={'green'} size={'sm'} style={{ maxWidth: 120 }}>
+					ADD NEW
+				</Button>
+			</Group>
 		</section>
 	)
 }
 
-Bank.layout = LAYOUT.DASHBOARD
+Index.layout = LAYOUT.DASHBOARD
