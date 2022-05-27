@@ -19,6 +19,7 @@ type UserContext = Context | undefined
 
 const UserStateContext = createContext<UserContext>(undefined)
 
+// TODO: Create a hook to push when user dispatch to the local storage
 function UserProvider({ children }: UserProviderProps) {
 	const [state, dispatch] = useState<State>(null)
 

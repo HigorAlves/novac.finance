@@ -21,11 +21,11 @@ import {
 } from 'react-icons/hi'
 
 import { ROUTES } from '~/config/constants'
-import { useUser } from '~/context'
+import { useUserStatus } from '~/hooks/useUserStatus'
 import { GoogleAuth } from '~/services'
 
 export function Header() {
-	const { state } = useUser()
+	const user = useUserStatus()
 	// TODO: use link component instead of router
 	const router = useRouter()
 	const [opened, setOpened] = useState<boolean>(false)
@@ -54,10 +54,7 @@ export function Header() {
 					<Menu
 						size={'lg'}
 						control={
-							<Avatar
-								onClick={() => setOpened(!opened)}
-								src={state?.photoURL}
-							/>
+							<Avatar onClick={() => setOpened(!opened)} src={user?.photoURL} />
 						}
 					>
 						<Menu.Item

@@ -1,24 +1,9 @@
-import { useEffect } from 'react'
-
-import { onAuthStateChanged } from '@firebase/auth'
 import { Grid, useMantineTheme } from '@mantine/core'
 
 import { FunctionsCard, LoginForm } from '~/components'
-import { useUser } from '~/context'
-import { AUTH } from '~/services'
 
 export default function Home() {
-	const { dispatch } = useUser()
-
 	const theme = useMantineTheme()
-
-	useEffect(() => {
-		onAuthStateChanged(AUTH, user => {
-			if (user) {
-				dispatch(user)
-			}
-		})
-	}, [dispatch])
 
 	return (
 		<Grid align={'center'} style={{ minHeight: '100vh' }}>
