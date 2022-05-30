@@ -9,12 +9,23 @@ import {
 	Title,
 	useMantineTheme
 } from '@mantine/core'
+import Link from 'next/link'
 
 import { currencyFormat } from '~/helpers/currencyFormat'
+import { deleteBankAccount } from '~/services/bank/bank'
 import { BankProps } from '~/types/bankTypes'
 
-export function BankCard(props: BankProps) {
+type BankCardProps = BankProps & {
+	reload: () => void
+}
+
+export function BankCard(props: BankCardProps) {
 	const theme = useMantineTheme()
+
+	function deleteBank() {
+		const dic = props.id as string
+		deleteBankAccount(dic).then(() => props.reload())
+	}
 
 	return (
 		<Paper p={'lg'} shadow={'xs'}>
@@ -30,13 +41,21 @@ export function BankCard(props: BankProps) {
 				</Group>
 
 				<Group position={'right'}>
-					<Button size={'xs'} variant={'subtle'} color={'blue'}>
-						WEBSITE
-					</Button>
+					<Link href={props.website} passHref>
+						<Button
+							component={'a'}
+							size={'xs'}
+							variant={'subtle'}
+							color={'blue'}
+							target={'_blank'}
+						>
+							WEBSITE
+						</Button>
+					</Link>
 					<Button size={'xs'} color={'dark'}>
 						EDIT
 					</Button>
-					<Button size={'xs'} color={'red'}>
+					<Button size={'xs'} color={'red'} onClick={deleteBank}>
 						DELETE
 					</Button>
 				</Group>

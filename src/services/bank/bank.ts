@@ -1,4 +1,12 @@
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore'
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDocs,
+	query,
+	where
+} from 'firebase/firestore'
 
 import { Firestore } from '~/services'
 import { BankProps } from '~/types/bankTypes'
@@ -24,4 +32,9 @@ export async function getBankAccounts(uid: string) {
 	)
 
 	return bankAccounts
+}
+
+export function deleteBankAccount(dic: string) {
+	const database = collection(Firestore, 'bank')
+	return deleteDoc(doc(database, dic))
 }
