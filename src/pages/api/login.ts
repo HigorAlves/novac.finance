@@ -1,10 +1,11 @@
+import { NextApiRequest, NextApiResponse } from 'next'
 import { setAuthCookies } from 'next-firebase-auth'
 
 import initAuth from '~/helpers/initAuth' // the module you created above
 
 initAuth()
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		await setAuthCookies(req, res)
 	} catch (e) {
