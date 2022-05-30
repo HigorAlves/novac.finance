@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import {
 	Button,
@@ -10,10 +10,20 @@ import {
 	TextInput,
 	Title
 } from '@mantine/core'
+import { useRouter } from 'next/router'
 
+import { useUserStatus } from '~/hooks/useUserStatus'
 import { GoogleAuth } from '~/services'
 
 export function LoginForm() {
+	const router = useRouter()
+	const user = useUserStatus()
+
+	useEffect(() => {
+		if (user) {
+			router.push('/dashboard')
+		}
+	}, [user])
 	return (
 		<Container size={'xs'}>
 			<Title order={1}>Sign up</Title>

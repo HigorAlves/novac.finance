@@ -5,6 +5,7 @@ import Head from 'next/head'
 
 import { LAYOUT } from '~/config/constants'
 import { UserProvider } from '~/context/AuthContext'
+import initAuth from '~/helpers/initAuth'
 import { Layout, LayoutTypes } from '~/layout'
 
 type NextPageWithLayout = NextPage & {
@@ -15,6 +16,8 @@ type NextPageWithLayout = NextPage & {
 type AppPropsWithLayout = AppProps & {
 	Component: NextPageWithLayout
 }
+
+initAuth()
 
 export default function App(props: AppPropsWithLayout) {
 	const { Component, pageProps } = props
