@@ -1,10 +1,11 @@
 import React from 'react'
 
-import { Group, UnstyledButton } from '@mantine/core'
+import { Group, Tooltip, UnstyledButton } from '@mantine/core'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { HiOutlineHome, HiOutlineLibrary } from 'react-icons/hi'
 
+import { BadgesIcon, QuestsIcon, RevenueIcon } from '~/assets/icons'
+import { NewsfeedIcon } from '~/assets/icons/Newsfeed_Icon'
 import { ROUTES } from '~/config/constants'
 
 import { useStyles } from './mainLinks.style'
@@ -17,17 +18,19 @@ interface MainLinkProps {
 
 function MainLink({ icon, label, route }: MainLinkProps) {
 	return (
-		<Link passHref href={route}>
-			<UnstyledButton
-				component={'a'}
-				sx={theme => ({
-					display: 'block',
-					marginTop: theme.spacing.md
-				})}
-			>
-				{icon}
-			</UnstyledButton>
-		</Link>
+		<Tooltip label={label} position='right' withArrow>
+			<Link passHref href={route}>
+				<UnstyledButton
+					component={'a'}
+					sx={theme => ({
+						display: 'block',
+						marginTop: theme.spacing.md
+					})}
+				>
+					{icon}
+				</UnstyledButton>
+			</Link>
+		</Tooltip>
 	)
 }
 
@@ -37,25 +40,47 @@ export function MainLinks() {
 
 	const data = [
 		{
+			label: 'Newsfeed',
+			route: ROUTES.HOME,
 			icon: (
-				<HiOutlineHome
+				<NewsfeedIcon
 					className={cx(classes.icon, {
 						[classes.active]: router.pathname === ROUTES.HOME
 					})}
 				/>
-			),
-			label: 'Home',
-			route: ROUTES.HOME
+			)
 		},
 		{
 			icon: (
-				<HiOutlineLibrary
+				<RevenueIcon
 					className={cx(classes.icon, {
 						[classes.active]: router.pathname === ROUTES.BANK.INFO
 					})}
 				/>
 			),
 			label: 'Banking',
+			route: ROUTES.BANK.INFO
+		},
+		{
+			icon: (
+				<BadgesIcon
+					className={cx(classes.icon, {
+						[classes.active]: router.pathname === ROUTES.BANK.INFO
+					})}
+				/>
+			),
+			label: 'Badges',
+			route: ROUTES.BANK.INFO
+		},
+		{
+			icon: (
+				<QuestsIcon
+					className={cx(classes.icon, {
+						[classes.active]: router.pathname === ROUTES.BANK.INFO
+					})}
+				/>
+			),
+			label: 'Quests',
 			route: ROUTES.BANK.INFO
 		}
 	]
