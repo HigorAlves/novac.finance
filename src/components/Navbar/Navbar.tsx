@@ -10,13 +10,11 @@ export function Navbar() {
 	return (
 		<Container
 			hiddenBreakpoint={'sm'}
-			width={{ sm: 200, lg: 300 }}
+			width={{ sm: 80, lg: 80 }}
 			height={'100vh'}
-			p='xs'
 			hidden={!opened}
-			style={{ border: 0 }}
 		>
-			<Container.Section grow mt='md'>
+			<Container.Section grow>
 				<MainLinks />
 			</Container.Section>
 		</Container>

@@ -34,7 +34,16 @@ export function Header() {
 	const LIGHT_LOGO = '/assets/images/logo-light.png'
 
 	return (
-		<Container height={80} p='md' style={{ border: 0 }}>
+		<Container
+			height={60}
+			p='md'
+			style={{
+				border: 0,
+				background: theme.colors.red[6],
+				padding: 9,
+				paddingLeft: 20
+			}}
+		>
 			<Group grow>
 				<Group position={'left'}>
 					<Image
@@ -44,9 +53,10 @@ export function Header() {
 						alt={'Novac Pro Logo'}
 					/>
 				</Group>
+
 				<Group position={'right'} spacing={30} align={'center'}>
-					<Indicator inline color={'red'} style={{ marginTop: 5 }}>
-						<ActionIcon color={'gray'}>
+					<Indicator inline color={'white'}>
+						<ActionIcon color={'dark'} variant={'transparent'}>
 							<HiOutlineBell size={24} />
 						</ActionIcon>
 					</Indicator>
@@ -63,7 +73,7 @@ export function Header() {
 							Profile
 						</Menu.Item>
 						<Menu.Item
-							onClick={() => router.push(ROUTES.BANK_INFO)}
+							onClick={() => router.push(ROUTES.BANK.INFO)}
 							icon={<HiOutlineLibrary color={theme.colors.red[6]} size={18} />}
 						>
 							Banking Information

@@ -28,8 +28,8 @@ export const LAYOUT: Layout = {
 
 export const ROUTES = {
 	HOME: '/dashboard',
-	BANK_INFO: '/dashboard/bank',
 	BANK: {
+		INFO: '/dashboard/bank',
 		ADD: '/dashboard/bank/add'
 	}
 }

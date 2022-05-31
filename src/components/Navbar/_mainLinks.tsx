@@ -1,10 +1,13 @@
 import React from 'react'
 
-import { Group, Text, UnstyledButton } from '@mantine/core'
+import { Group, UnstyledButton } from '@mantine/core'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { HiOutlineHome, HiOutlineLibrary } from 'react-icons/hi'
 
 import { ROUTES } from '~/config/constants'
+
+import { useStyles } from './mainLinks.style'
 
 interface MainLinkProps {
 	icon: React.ReactNode
@@ -19,42 +22,56 @@ function MainLink({ icon, label, route }: MainLinkProps) {
 				component={'a'}
 				sx={theme => ({
 					display: 'block',
-					width: '100%',
-					padding: theme.spacing.xs,
-					borderRadius: theme.radius.sm,
-					color:
-						theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
-
-					'&:hover': {
-						backgroundColor:
-							theme.colorScheme === 'dark'
-								? theme.colors.dark[6]
-								: theme.colors.gray[0]
-					}
+					marginTop: theme.spacing.md
 				})}
 			>
-				<Group>
-					{icon}
-					<Text>{label}</Text>
-				</Group>
+				{icon}
 			</UnstyledButton>
 		</Link>
 	)
 }
 
-const data = [
-	{
-		icon: <HiOutlineHome size={24} color={'red'} />,
-		label: 'Home',
-		route: ROUTES.HOME
-	},
-	{
-		icon: <HiOutlineLibrary size={24} color={'red'} />,
-		label: 'Banking',
-		route: ROUTES.BANK_INFO
-	}
-]
-
 export function MainLinks() {
-	return data.map(link => <MainLink {...link} key={link.label} />)
+	const { classes, cx } = useStyles()
+	const router = useRouter()
+
+	const data = [
+		{
+			icon: (
+				<HiOutlineHome
+					className={cx(classes.icon, {
+						[classes.active]: router.pathname === ROUTES.HOME
+					})}
+				/>
+			),
+			label: 'Home',
+			route: ROUTES.HOME
+		},
+		{
+			icon: (
+				<HiOutlineLibrary
+					className={cx(classes.icon, {
+						[classes.active]: router.pathname === ROUTES.BANK.INFO
+					})}
+				/>
+			),
+			label: 'Banking',
+			route: ROUTES.BANK.INFO
+		}
+	]
+
+	return (
+		<>
+			{data.map(link => (
+				<Group
+					grow
+					align={'center'}
+					className={classes.container}
+					key={link.label}
+				>
+					<MainLink {...link} />
+				</Group>
+			))}
+		</>
+	)
 }
