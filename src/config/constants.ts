@@ -37,5 +37,5 @@ export const ROUTES = {
 export const AUTH_CONFIG: AuthConfig = {
 	whenAuthed: AuthAction.REDIRECT_TO_APP,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,
-	authPageURL: '/'
+	authPageURL: '/dashboard'
 }

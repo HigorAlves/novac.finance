@@ -1,14 +1,19 @@
 import React from 'react'
 
+import { Title } from '@mantine/core'
 import { withAuthUser, withAuthUserTokenSSR } from 'next-firebase-auth'
 
-import { AUTH_CONFIG, LAYOUT } from '~/config/constants'
+import { LAYOUT } from '~/config/constants'
 
 function Index() {
-	return <div>SOMETHING INSIDE HERE</div>
+	return (
+		<section>
+			<Title order={2}>Newsfeed</Title>
+		</section>
+	)
 }
 
 Index.layout = LAYOUT.DASHBOARD
 
 export const getServerSideProps = withAuthUserTokenSSR()()
-export default withAuthUser(AUTH_CONFIG)(Index)
+export default withAuthUser()(Index)
