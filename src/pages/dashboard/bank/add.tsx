@@ -1,17 +1,9 @@
 import React, { useState } from 'react'
 
-import {
-	Button,
-	Grid,
-	Paper,
-	Select,
-	Space,
-	Textarea,
-	TextInput,
-	Title
-} from '@mantine/core'
+import { Button, LoadingOverlay, Space, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 
+import { BankInfoForm, BankKeyPersonForm, BankOwnerForm } from '~/components'
 import { LAYOUT } from '~/config/constants'
 import { useUser } from '~/context'
 import { registerBankAccount } from '~/services/bank/bank'
@@ -79,149 +71,14 @@ export default function AddNewBankPage() {
 			<Title order={2}>New bank</Title>
 			<Space h={'lg'} />
 
-			<form onSubmit={form.onSubmit(handleSubmit)}>
-				<Paper p={'lg'}>
-					<Grid align={'center'}>
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Bank name'}
-								{...form.getInputProps('name')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Website'}
-								{...form.getInputProps('website')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Account Number'}
-								{...form.getInputProps('accountNumber')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<Select
-								required
-								label={'Bank Country Code'}
-								data={[{ value: 'brazil', label: '🇧🇷 Brazil' }]}
-								{...form.getInputProps('countryCode')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Bank Address'}
-								{...form.getInputProps('address')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Swift Code'}
-								{...form.getInputProps('swiftCode')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={12} sm={12} xs={12}>
-							<Textarea
-								autosize
-								label={'Additional Bank Notes'}
-								{...form.getInputProps('additionalNotes')}
-							/>
-						</Grid.Col>
-					</Grid>
-				</Paper>
-
-				<Paper p={'lg'} mt={'xl'}>
-					<Grid align={'center'}>
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Account Owner Name'}
-								{...form.getInputProps('ownerName')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Account Owner Street'}
-								{...form.getInputProps('ownerStreet')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Account Owner City'}
-								{...form.getInputProps('ownerCity')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Account Owner ZipCode'}
-								{...form.getInputProps('ownerZipCode')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<Select
-								required
-								label={'Account Owner Country'}
-								data={[{ value: 'brazil', label: '🇧🇷 Brazil' }]}
-								{...form.getInputProps('ownerCountry')}
-							/>
-						</Grid.Col>
-					</Grid>
-				</Paper>
-
-				<Paper p={'lg'} mt={'xl'} mb={'xl'}>
-					<Grid align={'center'}>
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Key Person Name'}
-								{...form.getInputProps('keyPersonName')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Key Person Email'}
-								{...form.getInputProps('keyPersonEmail')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<TextInput
-								required
-								label={'Key Person Phone'}
-								{...form.getInputProps('keyPersonPhone')}
-							/>
-						</Grid.Col>
-
-						<Grid.Col md={4} sm={12} xs={12}>
-							<Select
-								required
-								label={'Key Person Country'}
-								data={[{ value: 'brazil', label: '🇧🇷 Brazil' }]}
-								{...form.getInputProps('keyPersonCountry')}
-							/>
-						</Grid.Col>
-					</Grid>
-				</Paper>
+			<form
+				onSubmit={form.onSubmit(handleSubmit)}
+				style={{ position: 'relative' }}
+			>
+				<LoadingOverlay visible={loading} />
+				<BankInfoForm form={form} />
+				<BankOwnerForm form={form} />
+				<BankKeyPersonForm form={form} />
 
 				<Button color={'dark'} type={'submit'} fullWidth loading={loading}>
 					SAVE

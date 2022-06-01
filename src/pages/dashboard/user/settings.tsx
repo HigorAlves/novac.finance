@@ -11,7 +11,6 @@ import { LAYOUT } from '~/config/constants'
 
 function Settings() {
 	const user = useAuthUser()
-	console.log(user)
 	const VERIFIED_ACCOUNT = user.emailVerified ? 'Verified' : 'Unverified'
 
 	return (
