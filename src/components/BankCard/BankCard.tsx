@@ -11,6 +11,7 @@ import {
 } from '@mantine/core'
 import Link from 'next/link'
 
+import { ROUTES } from '~/config/constants'
 import { currencyFormat } from '~/helpers/currencyFormat'
 import { deleteBankAccount } from '~/services/bank/bank'
 import { BankProps } from '~/types/bankTypes'
@@ -52,9 +53,11 @@ export function BankCard(props: BankCardProps) {
 							WEBSITE
 						</Button>
 					</Link>
-					<Button size={'xs'} color={'dark'}>
-						EDIT
-					</Button>
+					<Link passHref href={`${ROUTES.BANK.EDIT}/${props.id}`}>
+						<Button component={'a'} size={'xs'} color={'dark'}>
+							EDIT
+						</Button>
+					</Link>
 					<Button size={'xs'} color={'red'} onClick={deleteBank}>
 						DELETE
 					</Button>

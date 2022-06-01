@@ -3,8 +3,10 @@ import {
 	collection,
 	deleteDoc,
 	doc,
+	getDoc,
 	getDocs,
 	query,
+	updateDoc,
 	where
 } from 'firebase/firestore'
 
@@ -32,6 +34,30 @@ export async function getBankAccounts(uid: string) {
 	)
 
 	return bankAccounts
+}
+
+export async function getBankAccountById(
+	bid: string
+): Promise<BankProps | null> {
+	const database = collection(Firestore, 'bank')
+	const docRef = doc(database, bid)
+	const docSnap = await getDoc(docRef)
+
+	if (docSnap.exists()) {
+		return docSnap.data() as BankProps
+	}
+
+	return null
+}
+
+export async function updateBankAccountById(
+	bid: string,
+	data: BankProps
+): Promise<boolean> {
+	const database = collection(Firestore, 'bank')
+	const docRef = doc(database, bid)
+	await updateDoc(docRef, { ...data })
+	return true
 }
 
 export function deleteBankAccount(dic: string) {

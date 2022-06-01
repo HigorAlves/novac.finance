@@ -30,7 +30,8 @@ export const ROUTES = {
 	HOME: '/dashboard',
 	BANK: {
 		INFO: '/dashboard/bank',
-		ADD: '/dashboard/bank/add'
+		ADD: '/dashboard/bank/add',
+		EDIT: '/dashboard/bank/edit'
 	},
 	USER: {
 		SETTINGS: '/dashboard/user/settings'
