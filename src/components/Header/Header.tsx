@@ -11,15 +11,16 @@ import {
 	useMantineTheme
 } from '@mantine/core'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import {
 	HiFingerPrint,
-	HiOutlineBell,
 	HiOutlineLibrary,
 	HiOutlineLogout,
 	HiOutlineUser
 } from 'react-icons/hi'
 
+import { NotificationIcon } from '~/assets/icons'
 import { ROUTES } from '~/config/constants'
 import { useUserStatus } from '~/hooks/useUserStatus'
 import { GoogleAuth } from '~/services'
@@ -57,7 +58,7 @@ export function Header() {
 				<Group position={'right'} spacing={30} align={'center'}>
 					<Indicator inline color={'white'}>
 						<ActionIcon color={'dark'} variant={'transparent'}>
-							<HiOutlineBell size={24} />
+							<NotificationIcon />
 						</ActionIcon>
 					</Indicator>
 
@@ -79,11 +80,13 @@ export function Header() {
 							Banking Information
 						</Menu.Item>
 						<Divider />
-						<Menu.Item
-							icon={<HiFingerPrint color={theme.colors.red[6]} size={18} />}
-						>
-							Account settings
-						</Menu.Item>
+						<Link passHref href={ROUTES.USER.SETTINGS}>
+							<Menu.Item
+								icon={<HiFingerPrint color={theme.colors.red[6]} size={18} />}
+							>
+								Account settings
+							</Menu.Item>
+						</Link>
 						<Menu.Item
 							icon={<HiOutlineLogout color={theme.colors.red[6]} size={18} />}
 							onClick={GoogleAuth.logout}

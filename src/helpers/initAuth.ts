@@ -13,29 +13,23 @@ const initAuth = () => {
 		onLogoutRequestError: err => {
 			console.error(err)
 		},
-		// firebaseAuthEmulatorHost: 'localhost:9099',
 		firebaseAdminInitConfig: {
 			credential: {
 				projectId: 'novac-pro',
 				clientEmail:
 					'firebase-adminsdk-ommob@novac-pro.iam.gserviceaccount.com',
-				// The private key must not be accessible on the client side.
 				privateKey: process.env.FIREBASE_PRIVATE_KEY as string
 			},
-			databaseURL: 'https://my-example-app.firebaseio.com'
+			databaseURL: 'https://novac-pro.firebaseio.com'
 		},
-		// Use application default credentials (takes precedence over fireaseAdminInitConfig if set)
-		// useFirebaseAdminDefaultCredential: true,
 		firebaseClientInitConfig: {
 			apiKey: process.env.NEXT_PUBLIC_APIKEY as string,
 			authDomain: process.env.AUTHDOMAIN,
-			databaseURL: 'https://novac-pro.firebaseio.com',
-			projectId: process.env.PROJECTID
+			projectId: process.env.PROJECTID,
+			databaseURL: 'https://novac-pro.firebaseio.com'
 		},
 		cookies: {
-			name: 'NovacPro', // required
-			// Keys are required unless you set `signed` to `false`.
-			// The keys cannot be accessible on the client side.
+			name: 'NovacPro',
 			keys: [
 				process.env.COOKIE_SECRET_CURRENT,
 				process.env.COOKIE_SECRET_PREVIOUS
@@ -45,7 +39,7 @@ const initAuth = () => {
 			overwrite: true,
 			path: '/',
 			sameSite: 'strict',
-			secure: true, // set this to false in local (non-HTTPS) development
+			secure: true,
 			signed: true
 		},
 		onVerifyTokenError: err => {

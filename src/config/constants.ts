@@ -31,6 +31,9 @@ export const ROUTES = {
 	BANK: {
 		INFO: '/dashboard/bank',
 		ADD: '/dashboard/bank/add'
+	},
+	USER: {
+		SETTINGS: '/dashboard/user/settings'
 	}
 }
 
