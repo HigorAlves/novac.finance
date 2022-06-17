@@ -9,7 +9,7 @@ export const useStyles = createStyles((theme, _params) => ({
 		transition: 'all .2s ease-in-out',
 
 		'&:hover': {
-			fill: theme.colors.red[6],
+			fill: theme.colors.violet[4],
 			backgroundColor: theme.colors.gray[1],
 			boxShadow: '4px 7px 12px 0 rgba(35,210,226, .2)'
 		}
@@ -17,7 +17,9 @@ export const useStyles = createStyles((theme, _params) => ({
 
 	active: {
 		backgroundColor:
-			theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.red[7],
+			theme.colorScheme === 'dark'
+				? theme.colors.dark[6]
+				: theme.colors.violet[4],
 		fill: '#fff',
 		boxShadow: '4px 7px 12px 0 rgba(35,210,226, .2)',
 
@@ -25,7 +27,7 @@ export const useStyles = createStyles((theme, _params) => ({
 			backgroundColor:
 				theme.colorScheme === 'dark'
 					? theme.colors.dark[6]
-					: theme.colors.red[7],
+					: theme.colors.violet[6],
 			fill: '#fff'
 		}
 	},

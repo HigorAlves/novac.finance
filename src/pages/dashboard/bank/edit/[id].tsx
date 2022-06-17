@@ -60,6 +60,7 @@ function EditBankPage(props: BankProps) {
 
 EditBankPage.layout = LAYOUT.DASHBOARD
 export const getServerSideProps = withAuthUserTokenSSR()(async ({ params }) => {
+	// @ts-ignore
 	const { id } = params
 	const data = await getBankAccountById(id)
 

@@ -36,12 +36,12 @@ export function Header() {
 
 	return (
 		<Container
-			height={60}
+			height={80}
 			p='md'
 			style={{
 				border: 0,
-				background: theme.colors.red[6],
-				padding: 9,
+				background: theme.colors.violet[7],
+				padding: 20,
 				paddingLeft: 20
 			}}
 		>
