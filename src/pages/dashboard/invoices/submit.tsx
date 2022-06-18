@@ -116,6 +116,19 @@ function Index() {
 								}))}
 							/>
 						</Grid.Col>
+						<Grid.Col md={2} sm={12}>
+							<Select
+								required
+								label='Status'
+								placeholder='Pick one'
+								data={[
+									{ value: 'Submitted', label: 'Submitted' },
+									{ value: 'Approved', label: 'Approved' },
+									{ value: 'On Bank', label: 'On Bank' },
+									{ value: 'Paid', label: 'Paid' }
+								]}
+							/>
+						</Grid.Col>
 
 						<Grid.Col sm={12} mt={'xl'}>
 							<Title order={3}>Finance</Title>
@@ -168,6 +181,19 @@ function Index() {
 										: 'R$ '
 								}
 								{...form.getInputProps('reais')}
+							/>
+						</Grid.Col>
+						<Grid.Col md={2} sm={12}>
+							<NumberInput
+								label='Transaction fees'
+								hideControls
+								defaultValue={1000}
+								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
+								formatter={value =>
+									!Number.isNaN(parseFloat(value as string))
+										? `R$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+										: 'R$ '
+								}
 							/>
 						</Grid.Col>
 
