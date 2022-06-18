@@ -828,6 +828,11 @@
     react-popper "^2.2.5"
     react-textarea-autosize "^8.3.2"
 
+"@mantine/dates@^4.2.9":
+  version "4.2.9"
+  resolved "https://registry.yarnpkg.com/@mantine/dates/-/dates-4.2.9.tgz#67d01c0094c1102d3236392237a04a96d9649429"
+  integrity sha512-9snMNFIbC2PWPCQlfIC7pLQ9yWLImFQeECBPhULZHsmBMvy0OYH/V1jmp2BLIBNLAxzmfG19McX/iJl6Nd5DjA==
+
 "@mantine/dropzone@^4.2.9":
   version "4.2.9"
   resolved "https://registry.yarnpkg.com/@mantine/dropzone/-/dropzone-4.2.9.tgz#dd1bc814bf6794bdb896ca0be227d9f412092d33"
@@ -2052,6 +2057,11 @@ dateformat@^3.0.0:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-3.0.3.tgz#a6e37499a4d9a9cf85ef5872044d62901c9889ae"
   integrity sha512-jyCETtSl3VMZMWeRo7iY1FL19ges1t55hMo5yaam4Jrsm5EPL89UQkoQRyiI+Yf4k8r2ZpdngkV8hr1lIdjb3Q==
+
+dayjs@^1.11.3:
+  version "1.11.3"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.3.tgz#4754eb694a624057b9ad2224b67b15d552589258"
+  integrity sha512-xxwlswWOlGhzgQ4TKzASQkUhqERI3egRNqgV4ScR8wlANA/A9tZ7miXa44vTTKEq5l7vWoL5G57bG3zA+Kow0A==
 
 debug@4, debug@^4.1.1, debug@^4.3.2, debug@^4.3.3, debug@^4.3.4:
   version "4.3.4"
@@ -5072,6 +5082,11 @@ svg-tags@1:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/svg-tags/-/svg-tags-1.0.0.tgz#58f71cee3bd519b59d4b2a843b6c7de64ac04764"
   integrity sha1-WPcc7jvVGbWdSyqEO2x95krAR2Q=
+
+tabler-icons-react@^1.49.0:
+  version "1.49.0"
+  resolved "https://registry.yarnpkg.com/tabler-icons-react/-/tabler-icons-react-1.49.0.tgz#9f01283fa9422e8946ccc9c43b402b364f7666e8"
+  integrity sha512-e6gWcqN2WNN9MZE04uA1t9/u7+GzEZnIPB2grGOtJnFrU+FkJ0mV5ezcUQx/HIypoePmzlp8c9uEB1Kfg68UgQ==
 
 teeny-request@^7.1.3:
   version "7.2.0"
