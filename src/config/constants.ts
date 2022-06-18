@@ -28,6 +28,8 @@ export const LAYOUT: Layout = {
 
 export const ROUTES = {
 	HOME: '/dashboard',
+	BADGES: '/dashboard/badges',
+	QUESTS: '/dashboard/quests',
 	BANK: {
 		INFO: '/dashboard/bank',
 		ADD: '/dashboard/bank/add',
@@ -35,6 +37,10 @@ export const ROUTES = {
 	},
 	USER: {
 		SETTINGS: '/dashboard/user/settings'
+	},
+	INVOICE: {
+		INFO: '/dashboard/invoices',
+		SUBMIT: '/dashboard/invoices/submit'
 	}
 }
 

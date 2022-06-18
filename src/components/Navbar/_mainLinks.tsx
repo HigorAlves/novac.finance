@@ -4,7 +4,7 @@ import { Group, Tooltip, UnstyledButton } from '@mantine/core'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { BadgesIcon, QuestsIcon, RevenueIcon } from '~/assets/icons'
+import { RevenueIcon } from '~/assets/icons'
 import { NewsfeedIcon } from '~/assets/icons/Newsfeed_Icon'
 import { ROUTES } from '~/config/constants'
 
@@ -54,34 +54,12 @@ export function MainLinks() {
 			icon: (
 				<RevenueIcon
 					className={cx(classes.icon, {
-						[classes.active]: router.pathname === ROUTES.BANK.INFO
+						[classes.active]: router.pathname === ROUTES.INVOICE.INFO
 					})}
 				/>
 			),
-			label: 'Banking',
-			route: ROUTES.BANK.INFO
-		},
-		{
-			icon: (
-				<BadgesIcon
-					className={cx(classes.icon, {
-						[classes.active]: router.pathname === ROUTES.BANK.INFO
-					})}
-				/>
-			),
-			label: 'Badges',
-			route: ROUTES.BANK.INFO
-		},
-		{
-			icon: (
-				<QuestsIcon
-					className={cx(classes.icon, {
-						[classes.active]: router.pathname === ROUTES.BANK.INFO
-					})}
-				/>
-			),
-			label: 'Quests',
-			route: ROUTES.BANK.INFO
+			label: 'Invoice',
+			route: ROUTES.INVOICE.INFO
 		}
 	]
 

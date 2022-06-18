@@ -8,6 +8,7 @@ import {
 	Header as Container,
 	Indicator,
 	Menu,
+	Title,
 	useMantineTheme
 } from '@mantine/core'
 import Image from 'next/image'
@@ -53,6 +54,7 @@ export function Header() {
 						height={40}
 						alt={'Novac Pro Logo'}
 					/>
+					<Title order={4}>Novak</Title>
 				</Group>
 
 				<Group position={'right'} spacing={30} align={'center'}>
