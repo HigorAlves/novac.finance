@@ -44,6 +44,13 @@ export const ROUTES = {
 	}
 }
 
+export enum PAYMENT_STATUS {
+	SUBMITTED = 'SUBMITTED',
+	APPROVED = 'APPROVED',
+	ON_BANK = 'ON_BANK',
+	PAID = 'PAID'
+}
+
 export const AUTH_CONFIG: AuthConfig = {
 	whenAuthed: AuthAction.REDIRECT_TO_APP,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,

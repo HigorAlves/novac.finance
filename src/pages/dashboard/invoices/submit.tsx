@@ -19,14 +19,17 @@ import {
 import Link from 'next/link'
 
 import { Dropzone } from '~/components'
-import { LAYOUT, ROUTES } from '~/config/constants'
+import { LAYOUT, PAYMENT_STATUS, ROUTES } from '~/config/constants'
 import { getBankAccounts } from '~/services/bank/bank'
 import { BankProps } from '~/types/bankTypes'
+import { FileFormat } from '~/types/invoice.types'
 
 function Index() {
 	const user = useAuthUser()
 	const [banks, setBank] = useState<Array<BankProps | null>>([])
 	const [loading, setLoading] = useState<boolean>(true)
+	const [invoicePDF, setInvoicePDF] = useState<FileFormat>()
+	const [nfPDF, setNfPDF] = useState<FileFormat>()
 	const form = useForm({
 		initialValues: {
 			number: 0,
@@ -34,21 +37,6 @@ function Index() {
 			reais: 20000
 		}
 	})
-
-	const monthNames = [
-		'January',
-		'February',
-		'March',
-		'April',
-		'May',
-		'June',
-		'July',
-		'August',
-		'September',
-		'October',
-		'November',
-		'December'
-	]
 
 	async function bankState() {
 		setLoading(true)
@@ -122,10 +110,10 @@ function Index() {
 								label='Status'
 								placeholder='Pick one'
 								data={[
-									{ value: 'Submitted', label: 'Submitted' },
-									{ value: 'Approved', label: 'Approved' },
-									{ value: 'On Bank', label: 'On Bank' },
-									{ value: 'Paid', label: 'Paid' }
+									{ value: PAYMENT_STATUS.SUBMITTED, label: '📥 Submitted' },
+									{ value: PAYMENT_STATUS.APPROVED, label: '✅ Approved' },
+									{ value: PAYMENT_STATUS.ON_BANK, label: '⛳️ On Bank' },
+									{ value: PAYMENT_STATUS.PAID, label: '💰 Paid' }
 								]}
 							/>
 						</Grid.Col>
@@ -137,6 +125,7 @@ function Index() {
 							<NumberInput
 								hideControls
 								required
+								defaultValue={20}
 								label={'Hours'}
 								placeholder={'Hours'}
 							/>
@@ -147,6 +136,7 @@ function Index() {
 								required
 								label={'Price per hour'}
 								placeholder={'$40'}
+								defaultValue={40}
 								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
 								formatter={value =>
 									!Number.isNaN(parseFloat(value as string))
@@ -160,6 +150,7 @@ function Index() {
 								label='Price USD'
 								hideControls
 								defaultValue={1000}
+								disabled
 								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
 								formatter={value =>
 									!Number.isNaN(parseFloat(value as string))
@@ -201,10 +192,10 @@ function Index() {
 							<Title order={3}>Documents</Title>
 						</Grid.Col>
 						<Grid.Col md={6} sm={12}>
-							<Dropzone />
+							<Dropzone name={'Invoice'} setFileBinary={setInvoicePDF} />
 						</Grid.Col>
 						<Grid.Col md={6} sm={12}>
-							<Dropzone />
+							<Dropzone name={'NF'} setFileBinary={setNfPDF} />
 						</Grid.Col>
 					</Grid>
 				</form>

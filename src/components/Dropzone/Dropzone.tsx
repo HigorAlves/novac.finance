@@ -1,6 +1,14 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { Group, MantineTheme, Text, useMantineTheme } from '@mantine/core'
-import { Dropzone as Component, DropzoneStatus } from '@mantine/dropzone'
+import {
+	Dropzone as Component,
+	DropzoneStatus,
+	PDF_MIME_TYPE
+} from '@mantine/dropzone'
 import { File, Icon as TablerIcon, Upload, X } from 'tabler-icons-react'
+
+import { FileFormat } from '~/types/invoice.types'
 
 function getIconColor(status: DropzoneStatus, theme: MantineTheme) {
 	return status.accepted
@@ -29,7 +37,8 @@ function ImageUploadIcon({
 
 export const dropzoneChildren = (
 	status: DropzoneStatus,
-	theme: MantineTheme
+	theme: MantineTheme,
+	name: string
 ) => (
 	<Group
 		position='center'
@@ -44,7 +53,7 @@ export const dropzoneChildren = (
 
 		<div>
 			<Text size='xl' inline>
-				Drag the PDF here or click to select files
+				Drag the {name} PDF here or click to select files
 			</Text>
 			<Text size='sm' color='dimmed' inline mt={7}>
 				Attach as many files as you like, each file should not exceed 5mb
@@ -53,16 +62,38 @@ export const dropzoneChildren = (
 	</Group>
 )
 
-export function Dropzone() {
+interface DropzoneProps {
+	name: string
+	setFileBinary: Dispatch<SetStateAction<FileFormat | undefined>>
+}
+
+export function Dropzone({ setFileBinary, name }: DropzoneProps) {
 	const theme = useMantineTheme()
+
+	function uploadFile(files: File[]) {
+		const file = files[0]
+		const reader = new FileReader()
+		reader.onload = () => {
+			const binaryStr = reader.result
+
+			setFileBinary({
+				name: file.name,
+				binary: binaryStr,
+				type: name
+			})
+		}
+
+		reader.readAsArrayBuffer(file)
+	}
+
 	return (
 		<Component
-			onDrop={files => console.log('accepted files', files)}
-			onReject={files => console.log('rejected files', files)}
+			onDrop={uploadFile}
 			maxSize={3 * 1024 ** 2}
-			accept={['application/pdf']}
+			accept={PDF_MIME_TYPE}
+			multiple={false}
 		>
-			{status => dropzoneChildren(status, theme)}
+			{status => dropzoneChildren(status, theme, name)}
 		</Component>
 	)
 }

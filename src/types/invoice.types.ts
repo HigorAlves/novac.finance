@@ -14,3 +14,9 @@ export interface InvoiceProps {
 		nf: string
 	}
 }
+
+export interface FileFormat {
+	name: string
+	binary: ArrayBuffer | string | null
+	type: string
+}
