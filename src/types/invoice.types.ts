@@ -4,7 +4,10 @@ export interface InvoiceProps {
 	id?: string
 	number: number | null
 	company: COMPANIES | null
-	timePeriod: string | null | Date[]
+	timePeriod: {
+		start: Date | number
+		end: Date | number
+	}
 	bank: string | null
 	status: PAYMENT_STATUS | null
 	hoursWorked: number | null

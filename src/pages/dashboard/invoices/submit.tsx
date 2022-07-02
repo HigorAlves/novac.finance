@@ -26,7 +26,7 @@ interface FormProps {
 	reais: number | null
 	status: PAYMENT_STATUS | null
 	transactionTaxes: string | null
-	timePeriod: Array<Date> | null
+	timePeriod: [Date | null, Date | null] | null
 }
 
 function Index() {
@@ -120,7 +120,12 @@ function Index() {
 			bank: values.bank,
 			hoursWorked: values.hoursWorked,
 			pricePerHour: values.pricePerHour,
-			timePeriod: values.timePeriod,
+			timePeriod: {
+				// @ts-ignore
+				start: values.timePeriod[0].getTime(),
+				// @ts-ignore
+				end: values.timePeriod[1].getTime()
+			},
 			amount: {
 				dollars: values.dollars,
 				reais: values.reais
