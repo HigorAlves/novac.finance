@@ -1,4 +1,4 @@
-import { getStorage, ref, uploadBytes } from '@firebase/storage'
+import { getStorage, ref, uploadBytes, UploadResult } from '@firebase/storage'
 import {
 	addDoc,
 	collection,
@@ -40,15 +40,15 @@ export function deleteInvoice(dic: string) {
 	return deleteDoc(doc(database, dic))
 }
 
-export async function uploadInvoiceFile(
+export function uploadInvoiceFile(
 	binary: ArrayBuffer,
 	name: string,
 	type: string
-) {
+): Promise<UploadResult> {
 	const storage = getStorage()
 	const storageRef = ref(storage, `${type}/${name}`)
 	const metadata = {
 		contentType: 'application/pdf'
 	}
-	return await uploadBytes(storageRef, binary, metadata)
+	return uploadBytes(storageRef, binary, metadata)
 }

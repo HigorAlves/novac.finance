@@ -1,53 +1,148 @@
 import React, { useEffect, useState } from 'react'
 
-import {
-	Button,
-	Grid,
-	LoadingOverlay,
-	NumberInput,
-	Paper,
-	Select,
-	Title
-} from '@mantine/core'
-import { DateRangePicker } from '@mantine/dates'
+import { Button, LoadingOverlay, Paper, Title } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import {
 	useAuthUser,
 	withAuthUser,
 	withAuthUserTokenSSR
 } from 'next-firebase-auth'
-import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import { Dropzone } from '~/components'
-import { LAYOUT, PAYMENT_STATUS, ROUTES } from '~/config/constants'
+import { COMPANIES, LAYOUT, PAYMENT_STATUS } from '~/config/constants'
+import { AboutInvoiceForm, FileDropForm, FinanceInvoiceForm } from '~/container'
 import { getBankAccounts } from '~/services/bank/bank'
+import { postInvoice, uploadInvoiceFile } from '~/services/invoce'
 import { BankProps } from '~/types/bankTypes'
-import { FileFormat } from '~/types/invoice.types'
+import { FileFormat, InvoiceProps } from '~/types/invoice.types'
+
+interface FormProps {
+	bank: string | null
+	company: string | null
+	dollars: number | null
+	hoursWorked: number | null
+	number: number | null
+	pricePerHour: number | null
+	reais: number | null
+	status: PAYMENT_STATUS | null
+	transactionTaxes: string | null
+	timePeriod: Array<Date> | null
+}
 
 function Index() {
 	const user = useAuthUser()
+	const router = useRouter()
 	const [banks, setBank] = useState<Array<BankProps | null>>([])
 	const [loading, setLoading] = useState<boolean>(true)
-	const [invoicePDF, setInvoicePDF] = useState<FileFormat>()
-	const [nfPDF, setNfPDF] = useState<FileFormat>()
-	const form = useForm({
+	const [invoice, setInvoice] = useState<FileFormat>()
+	const [nf, setNF] = useState<FileFormat>()
+	const form = useForm<FormProps>({
 		initialValues: {
-			number: 0,
-			dollars: 3000,
-			reais: 20000
+			number: null,
+			dollars: null,
+			company: null,
+			bank: null,
+			hoursWorked: null,
+			pricePerHour: null,
+			reais: null,
+			timePeriod: null,
+			status: null,
+			transactionTaxes: null
 		}
 	})
 
-	async function bankState() {
+	function onDropInvoice(files: File[]) {
+		const file = files[0]
+		const reader = new FileReader()
+		reader.onload = () => {
+			const binaryStr = reader.result
+			setInvoice({
+				name: file.name,
+				binary: binaryStr,
+				type: file.type
+			})
+		}
+		reader.readAsArrayBuffer(file)
+	}
+
+	function onDropNF(files: File[]) {
+		const file = files[0]
+		const reader = new FileReader()
+		reader.onload = () => {
+			const binaryStr = reader.result
+			setNF({
+				name: file.name,
+				binary: binaryStr,
+				type: file.type
+			})
+		}
+		reader.readAsArrayBuffer(file)
+	}
+
+	async function loadBankData() {
 		setLoading(true)
-		const data = await getBankAccounts(user.id as string)
-		setBank(data)
+		if (user.id) {
+			const data = await getBankAccounts(user.id as string)
+			setBank(data)
+			setLoading(false)
+		}
+	}
+
+	async function uploadFiles() {
+		let invoiceURL = null
+		let nfURL = null
+		if (invoice && invoice.binary) {
+			const invoiceData = await uploadInvoiceFile(
+				invoice.binary as ArrayBuffer,
+				invoice.name,
+				'invoice'
+			)
+			invoiceURL = invoiceData.metadata.fullPath
+		}
+
+		if (nf && nf.binary) {
+			const nfData = await uploadInvoiceFile(
+				nf.binary as ArrayBuffer,
+				nf.name,
+				'nota-fiscal'
+			)
+			nfURL = nfData.metadata.fullPath
+		}
+
+		return { invoiceURL, nfURL }
+	}
+
+	async function onSubmit(values: FormProps) {
+		setLoading(true)
+		const { invoiceURL, nfURL } = await uploadFiles()
+		const data: InvoiceProps = {
+			company: values.company as COMPANIES,
+			bank: values.bank,
+			hoursWorked: values.hoursWorked,
+			pricePerHour: values.pricePerHour,
+			timePeriod: values.timePeriod,
+			amount: {
+				dollars: values.dollars,
+				reais: values.reais
+			},
+			documents: {
+				invoiceURL: invoiceURL,
+				notaFiscalURL: nfURL
+			},
+			taxes: {
+				transaction: values.transactionTaxes
+			},
+			status: values.status,
+			number: values.number
+		}
+		await postInvoice(data, user.id as string)
 		setLoading(false)
+		router.back()
 	}
 
 	useEffect(() => {
-		bankState()
-	}, [])
+		loadBankData()
+	}, [user])
 
 	return (
 		<section>
@@ -61,149 +156,21 @@ function Index() {
 				style={{ position: 'relative' }}
 			>
 				<LoadingOverlay visible={loading} />
-				<form onSubmit={form.onSubmit(values => console.log(values))}>
-					<Grid align={'center'}>
-						<Grid.Col sm={12}>
-							<Title order={3}>About</Title>
-						</Grid.Col>
-						<Grid.Col md={1} sm={12}>
-							<NumberInput
-								required
-								hideControls
-								label={'Number'}
-								placeholder={'Invoice ID'}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<Select
-								required
-								label='Company'
-								placeholder='Pick one'
-								data={[
-									{ value: 'xteam', label: '👻 X-Team' },
-									{ value: 'zipdev', label: '🤯 ZipDev' }
-								]}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<DateRangePicker
-								placeholder={'Pick a date'}
-								label={'Date range'}
-								required
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<Select
-								required
-								label='Bank'
-								placeholder='Pick one'
-								// @ts-ignore
-								data={(banks as [BankProps]).map((bank: BankProps) => ({
-									value: bank.id,
-									label: bank.name
-								}))}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<Select
-								required
-								label='Status'
-								placeholder='Pick one'
-								data={[
-									{ value: PAYMENT_STATUS.SUBMITTED, label: '📥 Submitted' },
-									{ value: PAYMENT_STATUS.APPROVED, label: '✅ Approved' },
-									{ value: PAYMENT_STATUS.ON_BANK, label: '⛳️ On Bank' },
-									{ value: PAYMENT_STATUS.PAID, label: '💰 Paid' }
-								]}
-							/>
-						</Grid.Col>
+				<form onSubmit={form.onSubmit(onSubmit)}>
+					<AboutInvoiceForm form={form} banks={banks as BankProps[]} />
+					<FinanceInvoiceForm form={form} />
+					<FileDropForm
+						hasInvoice={!!invoice}
+						hasNF={!!nf}
+						setInvoice={onDropInvoice}
+						setNF={onDropNF}
+					/>
 
-						<Grid.Col sm={12} mt={'xl'}>
-							<Title order={3}>Finance</Title>
-						</Grid.Col>
-						<Grid.Col md={1} sm={12}>
-							<NumberInput
-								hideControls
-								required
-								defaultValue={20}
-								label={'Hours'}
-								placeholder={'Hours'}
-							/>
-						</Grid.Col>
-						<Grid.Col md={1} sm={12}>
-							<NumberInput
-								hideControls
-								required
-								label={'Price per hour'}
-								placeholder={'$40'}
-								defaultValue={40}
-								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
-								formatter={value =>
-									!Number.isNaN(parseFloat(value as string))
-										? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-										: '$ '
-								}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<NumberInput
-								label='Price USD'
-								hideControls
-								defaultValue={1000}
-								disabled
-								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
-								formatter={value =>
-									!Number.isNaN(parseFloat(value as string))
-										? `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-										: '$ '
-								}
-								{...form.getInputProps('dollars')}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<NumberInput
-								label='Price BRL'
-								hideControls
-								defaultValue={1000}
-								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
-								formatter={value =>
-									!Number.isNaN(parseFloat(value as string))
-										? `R$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-										: 'R$ '
-								}
-								{...form.getInputProps('reais')}
-							/>
-						</Grid.Col>
-						<Grid.Col md={2} sm={12}>
-							<NumberInput
-								label='Transaction fees'
-								hideControls
-								defaultValue={1000}
-								parser={value => (value as string).replace(/\$\s?|(,*)/g, '')}
-								formatter={value =>
-									!Number.isNaN(parseFloat(value as string))
-										? `R$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-										: 'R$ '
-								}
-							/>
-						</Grid.Col>
-
-						<Grid.Col sm={12} mt={'xl'}>
-							<Title order={3}>Documents</Title>
-						</Grid.Col>
-						<Grid.Col md={6} sm={12}>
-							<Dropzone name={'Invoice'} setFileBinary={setInvoicePDF} />
-						</Grid.Col>
-						<Grid.Col md={6} sm={12}>
-							<Dropzone name={'NF'} setFileBinary={setNfPDF} />
-						</Grid.Col>
-					</Grid>
+					<Button mt={'xl'} type={'submit'} color={'green'}>
+						Submit Invoice
+					</Button>
 				</form>
 			</Paper>
-
-			<Link passHref href={ROUTES.INVOICE.SUBMIT}>
-				<Button color={'green'}>Submit Invoice</Button>
-			</Link>
 		</section>
 	)
 }

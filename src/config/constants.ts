@@ -51,6 +51,11 @@ export enum PAYMENT_STATUS {
 	PAID = 'PAID'
 }
 
+export enum COMPANIES {
+	XTEAM = 'XTEAM',
+	ZIPDEV = 'ZIPDEV'
+}
+
 export const AUTH_CONFIG: AuthConfig = {
 	whenAuthed: AuthAction.REDIRECT_TO_APP,
 	whenUnauthedAfterInit: AuthAction.REDIRECT_TO_LOGIN,

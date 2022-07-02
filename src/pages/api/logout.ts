@@ -1,11 +1,11 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 import { unsetAuthCookies } from 'next-firebase-auth'
 
-import initAuth from '~/helpers/initAuth' // the module you created above
+import initAuth from '~/helpers/initAuth'
 
 initAuth()
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const logout = async (req: NextApiRequest, res: NextApiResponse) => {
 	try {
 		await unsetAuthCookies(req, res)
 	} catch (e) {
@@ -14,4 +14,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 	return res.status(200).json({ success: true })
 }
 
-export default handler
+export default logout

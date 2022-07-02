@@ -40,7 +40,7 @@
 		"firebase": "^9.8.4",
 		"firebase-admin": "^11.0.0",
 		"next": "12.2.0",
-		"next-firebase-auth": "^0.14.4-alpha.0",
+		"next-firebase-auth": "^^1.0.0-canary.9",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-icons": "^4.4.0",
