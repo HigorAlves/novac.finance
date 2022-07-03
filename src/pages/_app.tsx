@@ -1,8 +1,50 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import { MantineProvider } from '@mantine/core'
+import { NextPage } from 'next'
+import { AppProps } from 'next/app'
+import Head from 'next/head'
 
-function MyApp({ Component, pageProps }: AppProps) {
-	return <Component {...pageProps} />
+import { LAYOUT } from '~/config/constants'
+import { UserProvider } from '~/context/AuthContext'
+import initAuth from '~/helpers/initAuth'
+import { Layout, LayoutTypes } from '~/layout'
+
+type NextPageWithLayout = NextPage & {
+	layout?: LayoutTypes
+	key?: string
 }
 
-export default MyApp
+type AppPropsWithLayout = AppProps & {
+	Component: NextPageWithLayout
+}
+
+initAuth()
+
+export default function App(props: AppPropsWithLayout) {
+	const { Component, pageProps } = props
+
+	const LAYOUT_KEY = Component.layout || (LAYOUT.BASE as LayoutTypes)
+
+	return (
+		<>
+			<Head>
+				<title>Novac.Pro Finance</title>
+				<meta
+					name='viewport'
+					content='minimum-scale=1, initial-scale=1, width=device-width'
+				/>
+			</Head>
+
+			<MantineProvider
+				withGlobalStyles
+				withNormalizeCSS
+				theme={{ colorScheme: 'light' }}
+			>
+				<UserProvider>
+					<Layout type={LAYOUT_KEY}>
+						<Component {...pageProps} />
+					</Layout>
+				</UserProvider>
+			</MantineProvider>
+		</>
+	)
+}
