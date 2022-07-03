@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { Button, Paper, Table, Title } from '@mantine/core'
+import { Button, Group, Paper, Table, Title } from '@mantine/core'
 import {
 	useAuthUser,
 	withAuthUser,
 	withAuthUserTokenSSR
 } from 'next-firebase-auth'
 import Link from 'next/link'
+import { Edit, Trash } from 'tabler-icons-react'
 
 import { LAYOUT, ROUTES } from '~/config/constants'
 import { getInvoices } from '~/services/invoce'
@@ -36,6 +37,7 @@ function Index() {
 			<th>Total $</th>
 			<th>Total R$</th>
 			<th>Status</th>
+			<th>Options</th>
 		</tr>
 	)
 
@@ -69,6 +71,16 @@ function Index() {
 				<td>{dollars}</td>
 				<td>{reais}</td>
 				<td>{invoice.status}</td>
+				<td>
+					<Group>
+						<Button leftIcon={<Edit />} color={'green'}>
+							Edit
+						</Button>
+						<Button leftIcon={<Trash />} color={'red'}>
+							Delete
+						</Button>
+					</Group>
+				</td>
 			</tr>
 		)
 	})
