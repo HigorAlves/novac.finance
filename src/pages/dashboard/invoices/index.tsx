@@ -40,7 +40,7 @@ function Index() {
 	)
 
 	const rows = invoices?.map(invoice => {
-		const options = {
+		const options: Intl.DateTimeFormatOptions = {
 			year: 'numeric',
 			month: 'long',
 			day: 'numeric'
