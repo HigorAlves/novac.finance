@@ -52,14 +52,22 @@ function Index() {
 			new Date(invoice.timePeriod.end)
 		)
 		const date = `${startDate} - ${endDate}`
+		const dollars = new Intl.NumberFormat('en-US', {
+			style: 'currency',
+			currency: 'USD'
+		}).format(invoice.amount.dollars as number)
+		const reais = new Intl.NumberFormat('pt-BR', {
+			style: 'currency',
+			currency: 'BRL'
+		}).format(invoice.amount.reais as number)
 		return (
 			<tr key={invoice.id}>
 				<td>{invoice.number}</td>
 				<td>{invoice.company}</td>
 				<td>{date}</td>
 				<td>{invoice.hoursWorked}</td>
-				<td>{invoice.amount.dollars}</td>
-				<td>{invoice.amount.reais}</td>
+				<td>{dollars}</td>
+				<td>{reais}</td>
 				<td>{invoice.status}</td>
 			</tr>
 		)
